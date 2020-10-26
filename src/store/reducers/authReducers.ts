@@ -45,5 +45,7 @@ export default (state = initialState, action: AuthAction ) => {
                 ...state,
                 success:action.payload
             }
+            default:
+                return state;
         }
 }
