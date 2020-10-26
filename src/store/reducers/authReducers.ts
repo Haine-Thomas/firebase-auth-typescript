@@ -18,5 +18,32 @@ export default (state = initialState, action: AuthAction ) => {
                 user:action.payload,
                 authenticated:true,
             }
-    }
+        case SET_LOADING:
+            return {
+                ...state,
+                loading:action.payload,
+            }
+        case SIGN_OUT:
+            return {
+                ...state,
+                user:null,
+                authenticated:false,
+                loading:false,
+            }
+        case SET_ERROR: 
+            return {
+                ...state,
+                error: action.payload
+            }
+        case NEED_VERIFICATION:
+            return {
+                ...state,
+                needVerification:true,
+            }
+        case SET_SUCCESS:
+            return {
+                ...state,
+                success:action.payload
+            }
+        }
 }
