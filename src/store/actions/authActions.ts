@@ -1,9 +1,8 @@
 import { ThunkAction } from 'redux-thunk';
 
-import { AuthAction, AuthState, SET_SUCCESS, NEED_VERIFICATION , User, SIGN_OUT, SET_LOADING, SET_USER, SET_ERROR, SignUpData } from '../types';
+import { AuthAction, AuthState, SET_SUCCESS, NEED_VERIFICATION , User, SIGN_OUT, SET_LOADING, SET_USER, SET_ERROR, SignUpData, SignInData } from '../types';
 import  { RootState } from '..';
 import firebase from '../../firebase/config';
-import userEvent from '@testing-library/user-event';
 
 //create User
 export const signup = ( data: SignUpData, onError: () => void): ThunkAction<void, RootState, null, AuthAction> => {
@@ -57,3 +56,83 @@ export const getUserById = (id: string):ThunkAction<void, RootState, null, AuthA
     }
 }
 
+export const setLoading = (value: boolean): ThunkAction<void, RootState, null, AuthAction> => {
+    return  dispatch => {
+      dispatch({
+          type:SET_LOADING,
+          payload: value,
+      });
+    }
+}
+
+// Log In
+export const signin = (data:SignInData, onError: () => void): ThunkAction<void, RootState, null, AuthAction> => {
+    return async dispatch => {
+        try {
+            await firebase.auth().signInWithEmailAndPassword(data.email, data.password);
+        } catch (err) {
+            console.log(err);
+            onError();
+            dispatch(setError(err.message));
+        }
+    }
+}
+
+//Log Out
+export const signout = (): ThunkAction<void, RootState, null, AuthAction> => {
+    return async dispatch => {
+        try {
+            dispatch(setLoading(true));
+            await firebase.auth().signOut();
+            dispatch({
+                type:SIGN_OUT,
+            })
+        } catch (err) {
+            console.log(err);
+            dispatch(setLoading(false));
+        }
+    }
+}
+
+
+// Set error
+export const setError = (msg: string): ThunkAction<void, RootState, null, AuthAction> => {
+    return dispatch => {
+        dispatch({
+            type:SET_ERROR,
+            payload:msg
+        });
+    }
+}
+
+// set need verification
+export const setNeedVerification = () : ThunkAction<void, RootState, null, AuthAction> => {
+    return dispatch => {
+        dispatch({
+            type:NEED_VERIFICATION
+        });
+    }
+}
+
+// set success
+export const setSuccess = (msg:string): ThunkAction<void, RootState, null, AuthAction> => {
+    return dispatch => {
+        dispatch({
+            type:SET_SUCCESS,
+            payload:msg,
+        });
+    }
+}
+
+// send password reset email
+export const sendPasswordResetEmail = (email: string, successMsg:string): ThunkAction<void, RootState, null, AuthAction> => {
+    return async dispatch => {
+        try {
+            await firebase.auth().sendPasswordResetEmail(email);
+            dispatch(setSuccess(successMsg));
+        } catch (err) {
+            console.log(err);
+            dispatch(setError(err.message));
+        }
+    }
+}
