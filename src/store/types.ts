@@ -62,3 +62,4 @@ interface SetSuccessAction {
 }
 
 export type AuthAction = SetUserAction | SetLoadingAction | SignOutAction | SetErrorAction | NeedVerificationAction | SetSuccessAction;
+

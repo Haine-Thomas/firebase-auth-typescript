@@ -1,12 +1,14 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 
 const Homepage: FC = () => {
-    return(
-        <section className="section">
-            <div className="container">
-                <h1 className="title has-text-centered is-size-1 mb-6">Welcome</h1>
-                <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo eligendi sit voluptate possimus totam quae non nulla repudiandae. Nobis, minus voluptas. Accusantium officiis, quod distinctio voluptas provident molestiae veritatis. Iste.</h2>
-            </div>
-        </section>
-    )
+  return(
+    <section className="section">
+      <div className="container">
+        <h1 className="title has-text-centered is-size-1 mb-6">Welcome</h1>
+        <h2>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ullam incidunt at animi eligendi facere reiciendis ad assumenda, omnis quasi id atque consequuntur obcaecati explicabo eius natus quae officiis itaque dolorem!</h2>
+      </div>
+    </section>
+  );
 }
+
+export default Homepage;
